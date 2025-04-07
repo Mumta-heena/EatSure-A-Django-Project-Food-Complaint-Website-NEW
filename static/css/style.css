@@ -1,0 +1,113 @@
+/* Custom styles for the EatSURE Welcome Page */
+body {
+    font-family: Arial, sans-serif;
+}
+
+header, footer {
+    background-color: #FF9900; /* Example color for the top and footer bar */
+    color: white;
+}
+
+.main-content {
+    text-align: center;
+    color: white;
+    background-image: url('/path/to/your/background.jpg'); /* Replace with the correct path to your background image */
+    background-size: cover;
+    background-position: center;
+    padding: 100px 20px;
+}
+
+h1, h2 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+section {
+    padding: 60px 20px;
+}
+
+.about-us-section {
+    background-color: #007b8f;
+    color: white;
+}
+
+.our-services {
+    background-color: #007b8f;
+    color: #ff9900;
+}
+
+.service-card {
+    background-color: white;
+    color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px;
+}
+
+.service-card h3 {
+    font-weight: bold;
+}
+
+.report-btn {
+    background-color: #007b8f;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 8px;
+    text-decoration: none;
+}
+
+/* Orange Navbar */
+.bg-orange {
+    background-color: #FF9800 !important; /* Replace with the shade of orange you need */
+}
+
+/* Navbar Text Colors */
+.navbar-brand, .nav-link {
+    color: #ffffff !important;
+    font-weight: bold !important; /* Ensures all text is bold */
+    margin: 0 15px; /* Adds spacing between links */
+}
+
+/* Remove link styling to make it look like plain text */
+.nav-link {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the color of surrounding text */
+    cursor: pointer; /* Show pointer to indicate it’s clickable */
+    font-weight: normal; /* Set normal weight if it’s bold */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.container {
+    max-width: 80%;
+    background-color: #008080; /* Matching the teal color in the screenshot */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.restaurant-name {
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+}
+
+.restaurant-branch {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: white;
+}
+
+.button-group .btn {
+    background-color: #c17b1e; /* Dark orange/brown button color */
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+
+.feedback-section {
+    border: 1px solid #ccc;
+}
+

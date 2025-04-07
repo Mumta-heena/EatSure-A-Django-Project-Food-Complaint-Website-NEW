@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Background styling */
+    body {
+        background-image: url('{% static "images/result.jpg" %}');  /* You can replace the image URL with your own */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;  /* Set the text color to white for contrast */
+        font-family: 'Arial', sans-serif;  /* Change the font if necessary */
+    }
+
+    .thank-you-container {
+        background-color: rgba(0, 0, 0, 0.5);  /* Semi-transparent black background */
+        padding: 50px;
+        border-radius: 15px;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .thank-you-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #f9c74f;  /* Golden color for the title */
+    }
+
+    .thank-you-message {
+        font-size: 1.2rem;
+        color: #e5e5e5;
+        line-height: 1.6;
+    }
+
+    .thank-you-button {
+        margin-top: 30px;
+        padding: 10px 25px;
+        font-size: 1.1rem;
+        background-color: #3c9aff;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .thank-you-button:hover {
+        background-color: #007bff;
+        color: #e5e5e5;
+    }
+
+</style>
+
+<div class="thank-you-container">
+    <h2 class="thank-you-title">Thank You!</h2>
+    <p class="thank-you-message">Your message has been successfully sent. <br>We will get back to you shortly.</p>
+    <a href="{% url 'welcome' %}" class="thank-you-button">Back to Home</a>
+</div>
+
+{% endblock %}

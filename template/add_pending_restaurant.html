@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    /* Full page background image styling */
+    body {
+        background: url('{% static "images/bg2.jpeg" %}') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Form container styling */
+    .suggest-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .suggest-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+        font-size: 28px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    /* Form input styling */
+    form .form-group {
+        margin-bottom: 20px;
+    }
+
+    form .form-group label {
+        font-size: 16px;
+        font-weight: bold;
+        color: #555;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    form .form-group input,
+    form .form-group textarea,
+    form .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+
+    form .form-group input:focus,
+    form .form-group textarea:focus,
+    form .form-group select:focus {
+        border-color: #ff9800;
+        outline: none;
+    }
+
+    /* Submit button */
+    .btn-submit {
+        display: block;
+        width: 100%;
+        background-color: #bb7000;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-submit:hover {
+        background-color: #ff9800;
+    }
+
+    /* Footer text */
+    .suggest-container p {
+        margin-top: 15px;
+        text-align: center;
+        color: #777;
+        font-size: 14px;
+    }
+</style>
+
+<div class="suggest-container">
+    <h2>Suggest a Restaurant</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            {{ form.location.label_tag }}
+            {{ form.location }}
+        </div>
+        <div class="form-group">
+            {{ form.cuisine.label_tag }}
+            {{ form.cuisine }}
+        </div>
+        <div class="form-group">
+            {{ form.image.label_tag }}
+            {{ form.image }}
+        </div>
+        <button type="submit" class="btn-submit">Submit</button>
+    </form>
+    <p>We value your input. Thank you for helping us improve!</p>
+</div>
+{% endblock %}

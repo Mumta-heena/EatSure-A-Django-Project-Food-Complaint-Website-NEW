@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-orange: #FF8C00;
+        --secondary-teal: #008080;
+        --text-dark: #2B2D42;
+    }
+
+    .report-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .restaurant-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .form-section {
+        padding: 2rem;
+        background: #f8f9fa;
+        border-radius: 16px;
+    }
+
+    .form-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 2rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+    .form-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--primary-orange);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text-dark);
+    }
+
+    .form-control-custom {
+        width: 100%;
+        padding: 0.8rem 1.2rem;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control-custom:focus {
+        border-color: var(--primary-orange);
+        box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
+    }
+
+    .file-upload {
+        position: relative;
+        border: 2px dashed #dee2e6;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .file-upload input {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .btn-submit {
+        background: var(--primary-orange);
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+    }
+
+    .btn-submit:hover {
+        background: #e67a00;
+        transform: translateY(-2px);
+    }
+
+    .btn-back {
+        background: #6c757d;
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .restaurant-image {
+            height: 300px;
+            margin-bottom: 2rem;
+        }
+        
+        .report-container {
+            padding: 1rem;
+        }
+    }
+</style>
+
+<div class="report-container">
+    <div class="row g-4">
+        <!-- Left Column - Restaurant Image -->
+        <div class="col-lg-5">
+            <img src="{{ restaurant.image.url }}" 
+                 alt="{{ restaurant.name }}" 
+                 class="restaurant-image">
+        </div>
+
+        <!-- Right Column - Report Form -->
+        <div class="col-lg-7">
+            <div class="form-section">
+                <h2 class="form-title">File a Complaint</h2>
+                
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Complaint Type -->
+                    <div class="form-group">
+                        <label class="form-label">Issue Type</label>
+                        <select name="issue" class="form-control-custom">
+                            <option value="">Select an issue type</option>
+                            <option value="Unhygienic Environment">Unhygienic Environment</option>
+                            <option value="Bad Quality Food">Bad Quality Food</option>
+                            <option value="Bad Service">Bad Service</option>
+                            <option value="Exceptionally High Price than MRP">Exceptionally High Price than MRP</option>
+                            <option value="Foreign Object in Food">Foreign Object in Food</option>
+                            <option value="Wait Time too Long">Wait Time too Long</option>
+                        </select>
+                    </div>
+
+                    <!-- Complaint Description -->
+                    <div class="form-group">
+                        <label class="form-label">Detailed Description</label>
+                        <textarea name="complaint_description" 
+                                  class="form-control-custom" 
+                                  rows="5"
+                                  placeholder="Please describe the issue in detail..."></textarea>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="form-group">
+                        <label class="form-label">Attach Photos (optional)</label>
+                        <div class="file-upload">
+                            <div class="mb-2">
+                                <i class="fas fa-cloud-upload-alt fa-2x text-muted"></i>
+                            </div>
+                            <div class="text-muted">
+                                Drag & drop files or <span class="text-primary">browse</span>
+                            </div>
+                            <input type="file" name="complaint_pic" multiple accept="image/*">
+                        </div>
+                        <small class="text-muted">Max 3 images (JPEG, PNG)</small>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="d-flex gap-3 mt-4">
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Report
+                        </button>
+                        <a href="{% url 'res_details' restaurant.id %}" class="btn-back">
+                            <i class="fas fa-arrow-left me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
