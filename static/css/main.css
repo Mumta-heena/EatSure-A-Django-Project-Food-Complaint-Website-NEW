@@ -1,0 +1,32 @@
+:root {
+    --primary-orange: #FF9F1C;
+    --primary-teal: #006D77;
+    --secondary-orange: #FFEBD6;
+    --secondary-teal: #E0F3F4;
+    --text-dark: #2B2D42;
+    --text-light: #F8F9FA;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Base Styles */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  main {
+    flex: 1;
+    background: var(--primary-teal);
+  }

@@ -1,0 +1,249 @@
+commands
+-----------
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+python manage.py createsuperuser
+
+
+git push and pull
+-------------------------
+
+push
+--------
+git add .
+git commit -m "Initial commit"
+git checkout -b afiah (not mandatory ig :3)
+git push -u origin afiah
+
+pull
+--------
+git pull origin main
+
+clone
+---------
+git clone <>code
+cd 'file name'
+---------------------------
+
+
+git pull from master to other branch
+-------------------
+git checkout feature-branch
+git fetch origin
+git pull origin master
+git merge master
+
+--------
+
+
+font
+https://fontawesome.com
+------------------------------------------
+
+<!-- restaurant_search.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Restaurant Search</h1>
+
+<form method="get" action="">
+    {{ form.as_p }}
+    <button type="submit">Search</button>
+</form>
+
+<h2>Results:</h2>
+<ul>
+    {% for restaurant in results %}
+        <li>{{ restaurant.name }} - {{ restaurant.address }}</li>
+    {% empty %}
+        <li>No restaurants found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+--------------
+def restaurants_search(request):
+    form = RestaurantSearchForm(request.GET)  # initialize with GET data
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        results = restaurant.objects.filter(name__icontains=query)
+        return render(request, 'searched_res_list.html', {'restaurants': results, 'query': query})
+    
+    # Render the initial search form in case of GET request without search
+    return render(request, 'search_res.html', {'form': form})
+
+testing
+-------------------------------------------------------------------------
+from django.test import TestCase
+from selenium import webdriver
+import pytest
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+import time
+
+
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+
+driver.get("http://127.0.0.1:8000/")
+
+time.sleep(2)
+driver.close()
+driver.quit()
+
+# Create your tests here.
+
+==============
+import pytest
+import time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+@pytest.fixture()
+def driver():
+    """Setup and teardown for the WebDriver."""
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+    driver.implicitly_wait(10)
+    yield driver
+    driver.quit()
+
+
+@pytest.mark.parametrize("username, password", [
+    ("abid", "abid"),
+    ("user2", "pass2"),
+    ("user3", "pass3"),
+    ("user4", "pass4"),
+    ("user5", "pass5"),
+    ("user6", "pass6"),
+    ("user7", "pass7"),
+    ("user8", "pass8"),
+    ("user9", "pass9"),
+    ("user10", "pass10"),
+])
+def test_login(driver, username, password):
+    """Test login functionality with multiple credentials."""
+    driver.get("http://127.0.0.1:8000/login/")
+
+    # Locate input fields and button
+    username_field = driver.find_element(By.ID, "username")
+    password_field = driver.find_element(By.ID, "password")
+    submit_button = driver.find_element(By.CSS_SELECTOR, ".btn-custom")
+
+    # Perform login
+    username_field.send_keys(username)
+    password_field.send_keys(password)
+    submit_button.click()
+
+    # Assert login success message
+    assert "Successful" in driver.page_source
+
+    # Optional sleep for debugging (use sparingly)
+    time.sleep(10)
+-------------
+pytest .\test-all\test_1.py
+---------------------------------------------------
+login test code
+================
+import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
+
+@pytest.fixture()
+def driver():
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+    driver.implicitly_wait(10)  # Adjust implicit wait time if needed
+    yield driver
+    driver.quit()
+
+@pytest.mark.parametrize("username, password", [
+    ("afiahR", "12345"),  # Example valid credentials
+    ("user2", "pass2"),   # Invalid credentials
+    ("butter", "butter"),  # Example valid credentials
+    ("butter", "pass2"),   # Valid username, wrong password
+    ("testing", "testing"),  # Example valid credentials
+    ("user2", "wrongpass"),   # Invalid credentials
+    ("test2", "test2"),  # Example valid credentials
+    ("wronguser", "wrongpass"),  # Invalid credentials
+    ("toffee", "cat1"),  # Example valid credentials
+    ("invalid", "invalid"),  # Invalid credentials
+])
+def test_login(driver, username, password):
+    driver.get("http://127.0.0.1:8000/login/")
+    username_field = driver.find_element(By.ID, "username")
+    password_field = driver.find_element(By.ID, "password")
+    submit_button = driver.find_element(By.CSS_SELECTOR, ".btn-custom")
+    
+    # Enter credentials
+    username_field.send_keys(username)
+    password_field.send_keys(password)
+    submit_button.click()
+
+    # Wait for a success or error condition
+    success_url = "http://127.0.0.1:8000/"
+    is_success = WebDriverWait(driver, 10).until(
+        lambda d: d.current_url == success_url or 
+                  d.find_elements(By.CSS_SELECTOR, ".error-message")
+    )
+
+    if driver.current_url == success_url:
+        assert is_success, f"Expected success but failed for credentials: {username} {password}"
+    else:
+        assert any("Invalid" in e.text or "error" in e.text.lower() 
+                   for e in driver.find_elements(By.CSS_SELECTOR, ".error-message")), \
+            f"Expected error but passed for credentials: {username} {password}"
+------------------------------------------------
+search
+-------------------------------------------------
+def test_search_with_multiple_queries(search_term):
+    # Setup WebDriver
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+    driver.set_window_size(898, 574)
+    
+    try:
+        # Navigate to the search page
+        driver.get("http://127.0.0.1:8000/search/")  # Directly open the search page
+    
+        # Step 1: Locate the search box
+        search_box = driver.find_element(By.NAME, "query")
+        search_box.click()
+    
+        # Step 2: Perform a search query
+        search_box.send_keys(search_term)
+        search_box.send_keys(Keys.ENTER)
+    
+        # Step 3: Wait for the search results page to load
+        try:
+            WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, ".restaurant-card"))  # Update selector if needed
+            )
+        except Exception as e:
+            print(f"Warning: Timeout occurred for query '{search_term}'.")
+        
+        # Step 4: Collect search results
+        result_elements = driver.find_elements(By.CSS_SELECTOR, ".restaurant-card")  # Update selector if needed
+        results = [result.text for result in result_elements]
+    
+        # Debugging Log
+        print(f"Search results for '{search_term}': {results}")
+    
+        # Step 5: Assertions to validate search results
+        if search_term == "":
+            assert len(results) == 0, "Expected no results for an empty search query."
+            print(f"Test passed for empty search query: No results found.")
+        else:
+            if search_term == "unavailable":  # Adjust for known cases
+                assert len(results) == 0, f"Expected no results for unavailable query: '{search_term}'."
+            else:
+                assert len(results) > 0, f"No results found for search query: '{search_term}'"
+    
+    finally:
+        # Teardown WebDriver
+        driver.quit()

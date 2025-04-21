@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    :root {
+        --font-heading: 'Poppins', sans-serif;
+        --font-body: 'Inter', sans-serif;
+    }
+
+    .restaurant-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 2rem 0;
+    }
+
+    .restaurant-card {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        background: #ffffff;
+        position: relative;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    .restaurant-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 40px rgba(255, 140, 0, 0.15);
+    }
+
+    .card-media {
+        height: 240px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card-media::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.6) 100%);
+        z-index: 1;
+    }
+
+    .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+
+    .restaurant-card:hover .card-image {
+        transform: scale(1.05);
+    }
+
+    .card-badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(255, 140, 0, 0.95);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 2;
+        backdrop-filter: blur(4px);
+    }
+
+    .card-content {
+        padding: 1.5rem;
+        position: relative;
+    }
+
+    .card-title {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #2B2D42;
+        margin-bottom: 0.75rem;
+        line-height: 1.3;
+    }
+
+    .card-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 1.5rem;
+    }
+
+    .card-location {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #6c757d;
+        font-size: 0.95rem;
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: auto;
+    }
+
+    .btn-primary {
+        background: #008080;
+        border: none;
+        padding: 10px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-primary:hover {
+        background: #006666;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: #ff8c00;
+        border: none;
+        color: white;
+        padding: 10px 24px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+        background: #e67a00;
+        transform: translateY(-2px);
+    }
+
+    .empty-state {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        text-align: center;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        color: #ff8c00;
+        margin-bottom: 1.5rem;
+    }
+
+    .skeleton-loading {
+        animation: skeleton-loading 1.5s infinite ease-in-out;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        border-radius: 8px;
+    }
+
+    @keyframes skeleton-loading {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+    }
+
+    .restaurant-grid {
+        position: relative;
+    }
+    
+    .empty-state {
+        margin: 2rem auto;
+        width: fit-content;
+        max-width: 600px;
+        transform: translateX(-50%);
+        left: 50%;
+        position: relative;
+    }
+
+</style>
+
+<div class="container-xxl py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="display-4 fw-bold mb-0" style="font-family: var(--font-heading)">Restaurants</h1>
+        {% if user.is_staff %}
+        <a href="{% url 'pending_restaurants_list' %}" class="btn btn-secondary">
+            <i class="fas fa-clock me-2"></i>Pending Requests
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="restaurant-grid">
+        {% if restaurants %}
+            {% for r in restaurants %}
+            <article class="restaurant-card">
+                <div class="card-media">
+                    <span class="card-badge">{{ r.cuisine|default:"Various" }}</span>
+                    <img src="{{ r.image.url }}" class="card-image" alt="{{ r.name }}">
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">{{ r.name }}</h2>
+                    <div class="card-meta">
+                        <span class="card-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ r.location }}
+                        </span>
+                    </div>
+                    <div class="card-actions">
+                        <a href="{% url 'res_details' r.id %}" class="btn btn-primary">
+                            <i class="fas fa-utensils me-2"></i>Explore
+                        </a>
+                        {% if user.is_staff %}
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" 
+                                    type="button" 
+                                    data-bs-toggle="dropdown">
+                                Manage
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'update_restaurant' r.id %}">
+                                        <i class="fas fa-pen me-2"></i>Edit
+                                    </a>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item text-danger" 
+                                            onclick="confirmDelete({{ r.id }})">
+                                        <i class="fas fa-trash me-2"></i>Delete
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3 class="mb-3">No Restaurants Found</h3>
+                <p class="text-muted mb-4">
+                    {% if query %}
+                    No results for "{{ query }}". Try different keywords.
+                    {% else %}
+                    Currently no restaurants in our directory
+                    {% endif %}
+                </p>
+                <a href="{% url 'add_pending_restaurant' %}" class="btn btn-secondary">
+                    <i class="fas fa-plus me-2"></i>Suggest New Restaurant
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    function confirmDelete(restaurantId) {
+        if (confirm("Permanently delete this restaurant?")) {
+            window.location.href = `{% url 'delete_restaurant' 0 %}`.replace(0, restaurantId);
+        }
+    }
+</script>
+{% endblock %}

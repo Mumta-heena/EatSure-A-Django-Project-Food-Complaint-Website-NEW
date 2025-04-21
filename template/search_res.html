@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-teal: #008080;
+        --primary-orange: #FF8C00;
+        --accent-teal: #4DBBBA;
+    }
+
+    /* Modern Hero Section */
+    .hero-section {
+        position: relative;
+        background: #ffffff;
+        color: rgb(59, 59, 59);
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 4rem 2rem;
+        margin: 4rem auto;
+        border-radius: 30px;
+        box-shadow: 0 20px 40px rgba(255, 140, 0, 0.2);
+        max-width: 1200px;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 800px;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        text-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .hero-subtitle {
+        font-size: 1.4rem;
+        opacity: 0.9;
+        margin-bottom: 3rem;
+        font-weight: 400;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+    }
+
+    /* Modern Search Box */
+    .search-container {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .search-box {
+        background: rgba(254, 194, 164, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 60px;
+        padding: 1rem 2rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .search-box:hover {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .search-input {
+        border: none;
+        background: transparent;
+        padding: 1rem;
+        font-size: 1.2rem;
+        width: 100%;
+        color: var(--text-dark);
+    }
+
+    .search-input:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .search-button {
+        background: var(--primary-orange);
+        border: none;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-button:hover {
+        transform: scale(1.05);
+        background: #e67a00;
+    }
+
+    .search-button i {
+        font-size: 1.5rem;
+        color: white;
+    }
+
+    /* Feature Cards */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 4rem auto;
+        padding: 0 2rem;
+    }
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--primary-teal);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        font-size: 2rem;
+        color: white;
+    }
+
+    /* Stats Section */
+    .stats-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 4rem 2rem;
+        margin: 4rem auto;
+        max-width: 1200px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--primary-teal);
+        margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+        }
+        
+        .search-box {
+            padding: 0.75rem 1.5rem;
+        }
+        
+        .search-input {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Safer Dining Experiences Start With You</h1>
+        <p class="hero-subtitle">Help maintain food safety standards by reporting issues and searching for verified restaurants</p>
+
+        <!-- Search Box -->
+        <div class="search-container">
+            <form method="GET" action="{% url 'search' %}" class="search-box d-flex align-items-center gap-3">
+                <input type="text" 
+                       name="query" 
+                       class="search-input" 
+                       placeholder="Search restaurants..." 
+                       required>
+                <button type="submit" class="search-button">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<div class="features-grid">
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>Verified Reports</h3>
+        <p class="text-muted">All submissions are reviewed by our safety team</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-clock"></i>
+        </div>
+        <h3>Quick Response</h3>
+        <p class="text-muted">Average 24-hour response time to reports</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Real-time Updates</h3>
+        <p class="text-muted">Track report status through resolution</p>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="stats-container text-center">
+    <div class="row">
+        <div class="col-md-4 mb-5">
+            <div class="stat-number">15K+</div>
+            <div class="text-teal fw-bold">Reports Resolved</div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div class="stat-number">98%</div>
+            <div class="text-teal fw-bold">Response Rate</div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div class="stat-number">4.8★</div>
+            <div class="text-teal fw-bold">User Satisfaction</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

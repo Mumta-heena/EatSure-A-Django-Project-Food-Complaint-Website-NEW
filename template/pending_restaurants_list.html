@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Page container styling */
+    .approvals-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Heading styling */
+    .approvals-container h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    /* List styling */
+    .restaurant-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .restaurant-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .restaurant-list li:hover {
+        background-color: #f0f0f0;
+    }
+
+    .restaurant-info {
+        font-size: 16px;
+        color: #555;
+    }
+
+    .restaurant-info strong {
+        color: #333;
+        font-size: 18px;
+    }
+
+    /* Button container */
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    /* Approve button styling */
+    .approve-button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .approve-button:hover {
+        background-color: #218838;
+    }
+
+    /* Reject button styling */
+    .reject-button {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .reject-button:hover {
+        background-color: #c82333;
+    }
+
+    /* Message for empty state */
+    .no-pending {
+        text-align: center;
+        color: #777;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="approvals-container">
+    <h2>Pending Restaurant Approvals</h2>
+    {% if pending_restaurants %}
+    <ul class="restaurant-list">
+        {% for restaurant in pending_restaurants %}
+        <li>
+            <div class="restaurant-info">
+                <strong>{{ restaurant.name }}</strong> - {{ restaurant.location }}
+            </div>
+            <div class="button-group">
+                <!-- Approve Form -->
+                <form method="POST" action="{% url 'approve_restaurant' restaurant.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="approve-button">Approve</button>
+                </form>
+                <!-- Reject Form -->
+                <form method="POST" action="{% url 'reject_restaurant' restaurant.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="reject-button">Reject</button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="no-pending">No pending restaurants at the moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

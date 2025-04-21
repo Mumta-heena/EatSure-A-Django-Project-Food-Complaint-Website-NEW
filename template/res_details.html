@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-color: #008080;
+        --accent-color: #FF9900;
+    }
+
+    .restaurant-container {
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 128, 128, 0.1);
+        padding: 2.5rem;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+
+    .restaurant-image-container {
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 15px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .restaurant-image {
+        width: 400px;  /* Increased from 300px */
+        height: 400px; /* Increased from 300px */
+        object-fit: contain;
+        border-radius: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .restaurant-image:hover {
+        transform: scale(1.02);
+    }
+
+    .restaurant-name {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+        border-bottom: 3px solid var(--accent-color);
+        padding-bottom: 0.5rem;
+        display: inline-block;
+    }
+
+    .restaurant-location {
+        color: #666;
+        margin-top: 0.5rem;
+    }
+
+    .action-button {
+        background-color: var(--accent-color);
+        border: none;
+        border-radius: 10px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(255, 153, 0, 0.2);
+        color: white !important;
+        font-weight: bold;
+    }
+
+    .action-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(255, 153, 0, 0.3);
+        background-color: #ff8800;
+    }
+
+    .action-button:active {
+        transform: translateY(1px);
+        box-shadow: 0 2px 4px rgba(255, 153, 0, 0.2);
+    }
+
+    .button-group {
+        margin-top: 2rem;
+    }
+
+    /* Added responsive adjustments for larger screens */
+    @media (min-width: 1200px) {
+        .restaurant-image {
+            width: 450px;  /* Even larger on big screens */
+            height: 450px;
+        }
+    }
+
+    /* Added responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+        .restaurant-image {
+            width: 350px;
+            height: 350px;
+        }
+    }
+</style>
+
+<div class="container restaurant-container">
+    <div class="row d-flex align-items-center">
+        <!-- Left Section with Logo -->
+        <div class="col-md-6">
+            <div class="restaurant-image-container">
+                <img src="{{ restaurant.image.url }}" 
+                     alt="{{ restaurant.name }} Logo" 
+                     class="restaurant-image">
+            </div>
+        </div>
+
+        <!-- Right Section with Details and Buttons -->
+        <div class="col-md-6">
+            <div class="restaurant-details">
+                <h1 class="restaurant-name display-4">{{ restaurant.name }}</h1>
+                <p class="restaurant-location h4">{{ restaurant.location }}</p>
+            </div>
+
+            <div class="button-group">
+                <a href="{% url 'create_report' restaurant.id %}" 
+                   class="btn action-button w-100 fs-4 mb-4">
+                    Report
+                </a>
+                <a href="{% url 'restaurant_complaints' restaurant.id %}" 
+                   class="btn action-button w-100 fs-4 mb-4">
+                    See Previous Reports
+                </a>
+                <a href="{% url 'welcome' %}" 
+                   class="btn action-button w-100 fs-4">
+                    Call Mobile Court
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
