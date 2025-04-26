@@ -1,146 +1,71 @@
-# train_model_optimized.py
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler
-import joblib
-from utils import clean_text  # Import the shared function
 import pandas as pd
-import re
-from sklearn.model_selection import train_test_split, GridSearchCV
+import os
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import StandardScaler
-import joblib
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, confusion_matrix
+from model_utils import save_model
 
-# ===========================================
-# 1. Define Global Variables (FIXED)
-# ===========================================
-text_feature = 'Review'
-meta_features = [
-    'F1-AWL', 'F2-PAU', 'F3-ANP', 'F4-ASL', 'F5-NCL', 
-    'F6-NWO', 'F7-NVB', 'F8-NAJ', 'F9-NPV', 'F10-EMO',
-    'F11-CDV', 'F12-RED', 'F13-LXD', 'F14-NMV', 'F15-NTY'
-]
-
-# ===========================================
-# 2. Load Data (FIXED: Use Global meta_features)
-# ===========================================
-def load_data():
-    df = pd.read_csv("restaurant_reviews_anonymized.csv", encoding='latin1')
+def train_and_evaluate():
+    # Verify file exists
+    if not os.path.exists("combined_data.csv"):
+        raise FileNotFoundError("Run preprocessing.py first!")
     
-    # Select relevant columns using global variables
-    df = df[[text_feature, 'Real'] + meta_features].copy()
-    df[text_feature] = df[text_feature].fillna('')  # Handle missing text
+    # Load data with additional validation
+    data = pd.read_csv("combined_data.csv")
     
-    return df
-
-# ===========================================
-# 3. Text Cleaning
-# ===========================================
-def clean_text(text):
-    text = re.sub(r'http\S+', '', text)
-    text = re.sub(r'[^a-zA-Z\s]', '', text)
-    text = text.lower()
+    # Final data sanitization
+    data = data.dropna(subset=["cleaned_review"])
+    data = data[data["cleaned_review"].str.strip() != ""]
+    data["cleaned_review"] = data["cleaned_review"].astype(str)
     
-    tokens = word_tokenize(text, language='english')
-    stop_words = set(stopwords.words('english'))
-    tokens = [word for word in tokens if word not in stop_words]
+    # Handle empty dataset edge case
+    if len(data) == 0:
+        raise ValueError("No valid data remaining after preprocessing!")
     
-    return ' '.join(tokens)
-
-# ===========================================
-# 4. Feature Pipeline (FIXED: Use Global meta_features)
-# ===========================================
-def create_feature_pipeline():
-    # Text processing pipeline
-    text_transformer = Pipeline([
-        ('tfidf', TfidfVectorizer(
-            max_features=500,
-            ngram_range=(1, 2),
-            stop_words='english'
-        ))
-    ])
-    
-    # Numerical features pipeline
-    meta_transformer = Pipeline([
-        ('scaler', StandardScaler())
-    ])
-    
-    # Combine pipelines
-    preprocessor = ColumnTransformer([
-        ('text', text_transformer, text_feature),  # Use text_feature
-        ('meta', meta_transformer, meta_features)  # Use global meta_features
-    ])
-    
-    return preprocessor
-
-# ===========================================
-# 5. Model Training
-# ===========================================
-def train_model(X, y):
-    pipeline = Pipeline([
-        ('preprocessor', create_feature_pipeline()),
-        ('classifier', RandomForestClassifier(
-            class_weight='balanced',
-            random_state=42
-        ))
-    ])
-    
-    params = {
-        'classifier__n_estimators': [100, 200],
-        'classifier__max_depth': [None, 5, 10],
-        'classifier__min_samples_split': [2, 5]
-    }
-    
-    grid_search = GridSearchCV(
-        pipeline,
-        param_grid=params,
-        cv=5,
-        scoring='accuracy',
-        n_jobs=-1
+    # TF-IDF features
+    tfidf = TfidfVectorizer(
+        max_features=1000,
+        ngram_range=(1, 2),
+        min_df=2,  # Ignore terms that appear in fewer than 2 documents
+        max_df=0.95  # Ignore terms that appear in more than 95% of documents
     )
     
-    grid_search.fit(X, y)
-    return grid_search
-
-# ===========================================
-# 6. Main Workflow (FIXED: Properly format X)
-# ===========================================
-if __name__ == "__main__":
-    # Load data
-    df = load_data()
+    try:
+        X = tfidf.fit_transform(data["cleaned_review"])
+    except ValueError as e:
+        print("Error in vectorization:")
+        print("Sample problematic reviews:")
+        print(data[data["cleaned_review"].str.len() < 3][["cleaned_review"]].head())
+        raise
     
-    # Clean text and retain original features
-    df['cleaned_review'] = df[text_feature].apply(clean_text)
-    
-    # Prepare features and target
-    X = df[[text_feature] + meta_features]  # Include original text + meta features
-    y = df['Real']
+    y = data["label"]
     
     # Train-test split
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, 
         test_size=0.2, 
-        random_state=42,
+        random_state=42, 
         stratify=y
     )
     
     # Train model
-    best_model = train_model(X_train, y_train)
+    model = LogisticRegression(
+        class_weight="balanced",
+        max_iter=1000,
+        solver='liblinear'  # Better for small-medium datasets
+    )
+    model.fit(X_train, y_train)
     
     # Evaluate
-    print(f"Best Parameters: {best_model.best_params_}")
-    print(f"Best CV Accuracy: {best_model.best_score_:.2f}")
-    
-    test_acc = best_model.score(X_test, y_test)
-    print(f"\nTest Accuracy: {test_acc:.2f}")
+    y_pred = model.predict(X_test)
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+    print("\nConfusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
     
     # Save model
-    joblib.dump(best_model, 'optimized_model.pkl')
-    print("\nOptimized model saved!")
+    save_model(model, tfidf, "fake_review_model.pkl", "tfidf_vectorizer.pkl")
+
+if __name__ == "__main__":
+    train_and_evaluate()
