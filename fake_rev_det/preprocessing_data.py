@@ -8,13 +8,13 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 def preprocess_and_combine():
     # Load datasets
-    shorter_dataset = pd.read_excel("shorter_dataset.xlsx", engine="openpyxl")
+    shorter_dataset = pd.read_excel("D:/Soft Dev LAB/fake_rev_det/shorter_dataset.xlsx", engine="openpyxl")
     shorter_dataset = shorter_dataset[["Review", "Real"]].rename(columns={
         "Review": "review", 
         "Real": "label"
     })
     
-    bigger_dataset = pd.read_excel("bigger_dataset.xlsx", engine="openpyxl")
+    bigger_dataset = pd.read_excel("D:/Soft Dev LAB/fake_rev_det/bigger_dataset.xlsx", engine="openpyxl")
     bigger_dataset = bigger_dataset[["reviewContent", "flagged"]].rename(columns={
         "reviewContent": "review", 
         "flagged": "label"

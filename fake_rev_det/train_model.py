@@ -12,7 +12,7 @@ def train_and_evaluate():
         raise FileNotFoundError("Run preprocessing.py first!")
     
     # Load data with additional validation
-    data = pd.read_csv("combined_data.csv")
+    data = pd.read_csv("D:/Soft Dev LAB/fake_rev_det/combined_data.csv")
     
     # Final data sanitization
     data = data.dropna(subset=["cleaned_review"])

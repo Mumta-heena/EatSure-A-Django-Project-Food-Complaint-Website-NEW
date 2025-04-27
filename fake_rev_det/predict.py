@@ -2,7 +2,7 @@
 from model_utils import load_model
 from utils import clean_text
 
-def predict_review(text, model_path="fake_review_model.pkl", vectorizer_path="tfidf_vectorizer.pkl"):
+def predict_review(text, model_path="D:/Soft Dev LAB/safe_eat/ML/fake_review_model.pkl", vectorizer_path="D:/Soft Dev LAB/safe_eat/ML/tfidf_vectorizer.pkl"):
     """Predict if a review is fake."""
     model, tfidf = load_model(model_path, vectorizer_path)
     cleaned_text = clean_text(text)
@@ -14,5 +14,9 @@ def predict_review(text, model_path="fake_review_model.pkl", vectorizer_path="tf
     }
 
 if __name__ == "__main__":
-    test_review = "This place is terrible! The food was cold and the staff was rude."
-    print(predict_review(test_review))
+    review_text = input("Enter a review: ")
+    result = predict_review(review_text)
+    print("\nPrediction:", result["prediction"])
+    print("Confidence:")
+    print(f"  Real: {result['confidence']['real']}")
+    print(f"  Fake: {result['confidence']['fake']}")
