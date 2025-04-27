@@ -14,9 +14,14 @@ def predict_review(text, model_path="D:/Soft Dev LAB/safe_eat/ML/fake_review_mod
     }
 
 if __name__ == "__main__":
-    review_text = input("Enter a review: ")
-    result = predict_review(review_text)
-    print("\nPrediction:", result["prediction"])
-    print("Confidence:")
-    print(f"  Real: {result['confidence']['real']}")
-    print(f"  Fake: {result['confidence']['fake']}")
+    while True:
+        review_text = input("Enter a review (or type 'exit' to quit): ")
+        if review_text.lower() == "exit":
+            print("Exiting...")
+            break
+
+        result = predict_review(review_text)
+        print("\nPrediction:", result["prediction"])
+        print("Confidence:")
+        print(f"  Real: {result['confidence']['real']}")
+        print(f"  Fake: {result['confidence']['fake']}")
