@@ -5,7 +5,7 @@
 <style>
     :root {
         --primary-teal: #008080;
-        --primary-orange: #FF8C00;
+        --dark-teal: #064e4e;
         --accent-teal: #4DBBBA;
     }
 
@@ -14,15 +14,15 @@
         position: relative;
         background: #ffffff;
         color: rgb(59, 59, 59);
-        min-height: 60vh;
+        min-height: 30vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 4rem 2rem;
+        padding: 2rem 2rem;
         margin: 4rem auto;
         border-radius: 30px;
-        box-shadow: 0 20px 40px rgba(255, 140, 0, 0.2);
+        box-shadow: 0 20px 40px #008080;
         max-width: 1200px;
     }
 
@@ -35,15 +35,15 @@
     }
 
     .hero-title {
-        font-size: 3.5rem;
+        font-size: 2rem;
         font-weight: 800;
-        margin-bottom: 1.5rem;
+        margin: 1rem;
         line-height: 1.1;
         text-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .hero-subtitle {
-        font-size: 1.4rem;
+        font-size: 1rem;
         opacity: 0.9;
         margin-bottom: 3rem;
         font-weight: 400;
@@ -62,7 +62,7 @@
     }
 
     .search-box {
-        background: rgba(254, 194, 164, 0.95);
+        background: #008080;
         backdrop-filter: blur(10px);
         border-radius: 60px;
         padding: 1rem 2rem;
@@ -80,7 +80,7 @@
         padding: 1rem;
         font-size: 1.2rem;
         width: 100%;
-        color: var(--text-dark);
+        color: #ffffff;
     }
 
     .search-input:focus {
@@ -89,7 +89,7 @@
     }
 
     .search-button {
-        background: var(--primary-orange);
+        background: var(--primary-teal);
         border: none;
         width: 56px;
         height: 56px;
@@ -102,7 +102,7 @@
 
     .search-button:hover {
         transform: scale(1.05);
-        background: #e67a00;
+        background: var(--dark-teal);
     }
 
     .search-button i {
@@ -137,7 +137,7 @@
     .feature-icon {
         width: 80px;
         height: 80px;
-        background: var(--primary-teal);
+        background: var(--primary-orange);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -152,17 +152,17 @@
         background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(10px);
         border-radius: 20px;
-        padding: 4rem 2rem;
-        margin: 4rem auto;
+        padding: 1rem 1rem;
+        margin: 2rem auto;
         max-width: 1200px;
+        max-height: 120px;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
     }
 
     .stat-number {
-        font-size: 3rem;
+        font-size: 2rem;
         font-weight: 700;
         color: var(--primary-teal);
-        margin-bottom: 0.5rem;
     }
 
     @media (max-width: 768px) {
@@ -183,28 +183,6 @@
         }
     }
 </style>
-
-<!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-content">
-        <h1 class="hero-title">Safer Dining Experiences Start With You</h1>
-        <p class="hero-subtitle">Help maintain food safety standards by reporting issues and searching for verified restaurants</p>
-
-        <!-- Search Box -->
-        <div class="search-container">
-            <form method="GET" action="{% url 'search' %}" class="search-box d-flex align-items-center gap-3">
-                <input type="text" 
-                       name="query" 
-                       class="search-input" 
-                       placeholder="Search restaurants..." 
-                       required>
-                <button type="submit" class="search-button">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </form>
-        </div>
-    </div>
-</section>
 
 <!-- Features Section -->
 <div class="features-grid">
@@ -250,5 +228,26 @@
         </div>
     </div>
 </div>
+<!-- Search Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Safer Dining Experiences Start With You</h1>
+        <p class="hero-subtitle">Help maintain food safety standards by reporting issues and searching for verified restaurants</p>
+
+        <!-- Search Box -->
+        <div class="search-container">
+            <form method="GET" action="{% url 'search' %}" class="search-box d-flex align-items-center gap-3">
+                <input type="text" 
+                       name="query" 
+                       class="search-input" 
+                       placeholder="Search restaurants..." 
+                       required>
+                <button type="submit" class="search-button">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
 
 {% endblock %}

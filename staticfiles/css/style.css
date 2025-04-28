@@ -4,7 +4,7 @@ body {
 }
 
 header, footer {
-    background-color: #FF9900; /* Example color for the top and footer bar */
+    background-color: #006d77; /* Example color for the top and footer bar */
     color: white;
 }
 
@@ -33,7 +33,7 @@ section {
 
 .our-services {
     background-color: #007b8f;
-    color: #ff9900;
+    color: #006d77;
 }
 
 .service-card {

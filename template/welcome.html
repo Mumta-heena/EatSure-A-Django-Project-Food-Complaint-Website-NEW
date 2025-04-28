@@ -4,7 +4,8 @@
 <style>
     :root {
         --primary-orange: #FFAE42;
-        --primary-teal: #4DBBBA;    
+        --primary-teal: #4DBBBA;
+        --dark-teal: #006D77;
         --text-dark: #2B2D42;
         --text-light: #F8F9FA;
     }
@@ -12,7 +13,7 @@
     /* Enhanced Hero Section */
     .hero-section {
         position: relative;
-        padding: 10rem 0 8rem;
+        padding: 6rem 0 4rem; /* Reduced top and bottom padding */
         color: white;
         overflow: hidden;
         background: url('{% static "images/abhishek-sanwa-limbu-5Q-7kgG7xbo-unsplash.jpg" %}');
@@ -35,12 +36,12 @@
         font-size: 4rem;
         font-weight: 800;
         line-height: 1.1;
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem; /* Reduced margin */
         letter-spacing: -0.05em;
     }
 
     .hero-heading .highlight {
-        color: var(--primary-orange);
+        color: var(--primary-teal);
         display: block;
         text-shadow: 0 4px 12px rgba(255, 179, 71, 0.3);
     }
@@ -48,7 +49,7 @@
     .hero-subheading {
         font-size: 1.5rem;
         opacity: 0.95;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem; /* Reduced margin */
         line-height: 1.6;
         font-weight: 400;
     }
@@ -56,21 +57,21 @@
     .cta-button {
         display: inline-flex;
         align-items: center;
-        padding: 1.25rem 3rem;
+        padding: 1rem 2.5rem; /* Slightly reduced padding */
         font-size: 1.25rem;
         font-weight: 700;
-        background: var(--primary-orange);
+        background: #015057;
         color: white !important;
         border-radius: 50px;
         text-decoration: none;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 8px 24px rgba(255, 179, 71, 0.3);
+        box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
         transform-style: preserve-3d;
     }
 
     .cta-button:hover {
         transform: translateY(-3px) rotateX(15deg);
-        box-shadow: 0 12px 32px rgba(255, 179, 71, 0.4);
+        box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
     }
 
     .cta-button i {
@@ -105,49 +106,50 @@
         pointer-events: none;
     }
 
-    /* Rest of the styles remain same as previous version */
+    /* How It Works */
     .features-section {
-        padding: 6rem 0;
-        background: #f9fafb;
+        padding: 4rem 0; /* Reduced top and bottom padding */
+        background: var(--primary-teal);
     }
 
     .feature-card {
         background: white;
         border-radius: 20px;
-        padding: 2rem;
+        padding: 1.5rem; /* Slightly reduced padding */
         text-align: center;
         transition: all 0.3s ease;
         border: 1px solid rgba(0,0,0,0.05);
     }
 
     .feature-card:hover {
-        transform: translateY(-10px);
+        transform: translateY(-5px);
         box-shadow: 0 12px 24px rgba(0,0,0,0.08);
     }
 
     .feature-icon {
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
         background: var(--primary-orange);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 1.5rem;
+        margin: 0 auto 1rem; /* Reduced bottom margin */
         font-size: 2rem;
         color: white;
         transition: all 0.3s ease;
     }
 
+    /* Our Commitment */
     .mission-section {
-        padding: 6rem 0;
-        background: rgba(0, 109, 119, 0.03);
+        padding: 4rem 0; /* Reduced top and bottom padding */
+        background: var(--primary-teal);
     }
 
     .mission-card {
         background: white;
         border-radius: 15px;
-        padding: 2rem;
+        padding: 1.5rem; /* Slightly reduced padding */
         text-align: center;
         transition: all 0.3s ease;
         border: 1px solid rgba(0,0,0,0.05);
@@ -155,44 +157,44 @@
     }
 
     .mission-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-3px); /* Slightly reduced hover effect */
         box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     }
 
     .mission-icon {
-        width: 70px;
-        height: 70px;
+        width: 60px; /* Slightly reduced size */
+        height: 60px; /* Slightly reduced size */
         border-radius: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin: 0 auto 1.5rem;
-        font-size: 1.8rem;
+        margin: 0 auto 1rem; /* Reduced bottom margin */
+        font-size: 1.6rem; /* Slightly reduced font size */
         transition: all 0.3s ease;
         position: relative;
     }
 
-    .bg-orange { 
+    .bg-orange {
         background: var(--primary-orange) !important;
         box-shadow: 0 4px 12px rgba(255, 174, 66, 0.3);
     }
-    .bg-teal { 
+    .bg-teal {
         background: var(--primary-teal) !important;
         box-shadow: 0 4px 12px rgba(77, 187, 186, 0.3);
     }
-    .bg-purple { 
+    .bg-purple {
         background: #6C63FF !important;
         box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
     }
-    .bg-green { 
+    .bg-green {
         background: #4CAF50 !important;
         box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
     }
-    .bg-red { 
+    .bg-red {
         background: #FF6B6B !important;
         box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
     }
-    .bg-blue { 
+    .bg-blue {
         background: #42A5F5 !important;
         box-shadow: 0 4px 12px rgba(66, 165, 245, 0.3);
     }
@@ -201,20 +203,21 @@
         color: white;
         text-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-    
+
     .bg-orange i,
     .bg-blue i,
     .bg-red i {
         color: var(--text-dark);
         text-shadow: 0 2px 4px rgba(255,255,255,0.15);
     }
-    
+
     .mission-card:hover .mission-icon {
         transform: rotate(15deg) scale(1.1);
     }
 
+    /* Final CTA */
     .final-cta {
-        padding: 6rem 0;
+        padding: 4rem 0; /* Reduced top and bottom padding */
         background: var(--primary-teal);
         text-align: center;
         color: white;
@@ -222,29 +225,27 @@
 </style>
 
 
-<!-- Hero Section -->
 <section class="hero-section">
     <div class="hero-content">
         <h1 class="hero-heading">
-            <span class="text-light">Dining With</span>
-            <span class="highlight">Confidence</span>
+            <span class="text-light" style="font-size: 80%">Dining With</span>
+            <span class="highlight" style="font-size: 80%">Confidence</span>
         </h1>
-        <p class="hero-subheading">
+        <p class="hero-subheading" style="font-size: 80%">
             Your voice matters in building safer food experiences.<br>
             Report issues, track resolutions, and help improve dining standards.
         </p>
-        <a href="{% if user.is_authenticated %}{% url 'search' %}{% else %}{% url 'login' %}{% endif %}" 
-           class="cta-button">
+        <a href="{% if user.is_authenticated %}{% url 'search' %}{% else %}{% url 'login' %}{% endif %}"
+           class="cta-button" style="font-size: 70%">
             Report a Cafe
             <i class="fas fa-arrow-right"></i>
         </a>
     </div>
 </section>
 
-<!-- How It Works -->
 <section class="features-section">
     <div class="container">
-        <h2 class="text-center mb-5 display-5 fw-bold">How It Works</h2>
+        <h2 class="text-center mb-4 display-5 fw-bold" style="font-size: x-large;">How It Works</h2>
         <div class="row g-4">
             <div class="col-md-6 col-lg-3">
                 <div class="feature-card">
@@ -252,8 +253,7 @@
                         <i class="fas fa-flag"></i>
                     </div>
                     <h3>Report</h3>
-                    <p class="text-muted">
-                        Submit detailed reports with photos of food safety concerns
+                    <p class="text-muted" style="font-size: 85%">Submit detailed reports with photos of food safety concerns
                     </p>
                 </div>
             </div>
@@ -263,7 +263,7 @@
                         <i class="fas fa-bell"></i>
                     </div>
                     <h3>Alert</h3>
-                    <p class="text-muted">
+                    <p class="text-muted" style="font-size: 90%">
                         Instant notifications to authorities and restaurants
                     </p>
                 </div>
@@ -274,7 +274,7 @@
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Track</h3>
-                    <p class="text-muted">
+                    <p class="text-muted" style="font-size: 90%">
                         Real-time updates on complaint resolution status
                     </p>
                 </div>
@@ -285,7 +285,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <h3>Resolve</h3>
-                    <p class="text-muted">
+                    <p class="text-muted" style="font-size: 90%">
                         Get notified when issues are successfully resolved
                     </p>
                 </div>
@@ -294,10 +294,9 @@
     </div>
 </section>
 
-<!-- Our Commitment -->
 <section class="mission-section">
     <div class="container">
-        <h2 class="text-center mb-5 display-5 fw-bold">Our Commitment</h2>
+        <h2 class="text-center mb-4 display-5 fw-bold" style="font-size: x-large;">Our Commitment</h2>
         <div class="row g-4">
             <div class="col-md-6 col-lg-4">
                 <div class="mission-card">
@@ -305,7 +304,7 @@
                         <i class="fas fa-bullhorn"></i>
                     </div>
                     <h4>Voice Amplification</h4>
-                    <p class="text-muted">
+                    <p class="text-muted" style="font-size: 90%">
                         Empower consumers to report food safety concerns instantly
                     </p>
                 </div>
@@ -316,7 +315,7 @@
                         <i class="fas fa-shield-alt"></i>
                     </div>
                     <h4>Public Protection</h4>
-                    <p class="text-muted">
+                    <p class="text-muted" style="font-size: 90%">
                         Prevent foodborne illnesses through early detection
                     </p>
                 </div>
@@ -327,7 +326,7 @@
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h4>Transparency First</h4>
-                    <p class="text-muted">
+                    <p class="text-muted" style="font-size: 90%">
                         Real-time tracking of complaint resolution status
                     </p>
                 </div>
@@ -338,7 +337,7 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <h4>Community Power</h4>
-                    <p class="text-muted">
+                    <p class="text-muted" style="font-size: 90%">
                         Collective impact to improve dining standards
                     </p>
                 </div>
@@ -349,7 +348,7 @@
                         <i class="fas fa-heartbeat"></i>
                     </div>
                     <h4>Health Advocacy</h4>
-                    <p class="text-muted">
+                    <p class="text-muted" style="font-size: 90%">
                         Protect public health through proactive monitoring
                     </p>
                 </div>
@@ -360,7 +359,7 @@
                         <i class="fas fa-database"></i>
                     </div>
                     <h4>Data-Driven</h4>
-                    <p class="text-muted">
+                    <p class="text-muted" style="font-size: 90%">
                         Analytics to identify and address recurring issues
                     </p>
                 </div>
@@ -369,11 +368,10 @@
     </div>
 </section>
 
-<!-- Final CTA -->
 <section class="final-cta">
     <div class="container">
-        <h2 class="display-5 fw-bold mb-4">Ready to Make a Difference?</h2>
-        <a href="{% if user.is_authenticated %}{% url 'search' %}{% else %}{% url 'login' %}{% endif %}" 
+        <h2 class="display-5 fw-bold mb-4" style="font-size: 200%">Ready to Make a Difference?</h2>
+        <a href="{% if user.is_authenticated %}{% url 'search' %}{% else %}{% url 'login' %}{% endif %}"
            class="cta-button">
             Start Reporting Now
             <i class="fas fa-arrow-right ms-3"></i>

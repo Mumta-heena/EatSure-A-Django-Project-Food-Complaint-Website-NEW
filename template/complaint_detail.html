@@ -196,6 +196,9 @@
             {% if user.is_staff %}
             <!-- Button to copy text -->
             <button class="copy-btn" onclick="copyText()">Copy Text</button>
+            <div id="copyMessage" style="display: none; color: green; margin-top: 10px; font-weight: bold;"></div>
+            <br>
+            <br>
             <!-- Button to Predict -->
             <a href="{% url 'fake_det' %}" 
                             class="predict-btn" role="button">
@@ -274,7 +277,6 @@
     }
 
     function copyText() {
-        // Select the text inside the div
         const textToCopy = document.getElementById('textToCopy');
         const range = document.createRange();
         range.selectNodeContents(textToCopy);
@@ -282,15 +284,23 @@
         selection.removeAllRanges();
         selection.addRange(range);
 
-        // Copy the selected text to clipboard
         try {
             document.execCommand('copy');
-            alert('Text copied to clipboard!');
+
+            // Show success message
+            const message = document.getElementById('copyMessage');
+            message.style.display = 'block';  // show it
+            message.innerText = '✅ Text copied!';
+            
+            // Hide after 2 seconds
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000);
+
         } catch (err) {
-            alert('Failed to copy text: ' + err);
+            console.error('Failed to copy text:', err);
         }
 
-        // Clear selection
         selection.removeAllRanges();
     }
 </script>

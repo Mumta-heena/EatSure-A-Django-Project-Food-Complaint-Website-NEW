@@ -45,7 +45,8 @@ a:hover {
 .container {
   max-width: 1200px; /* Standard container width */
   margin: 0 auto;
-  padding: 20px; /* Adjust padding as needed */
+  padding: 10px; /* Adjust padding as needed */
+  color: #47351f;
 }
 
 .section-padding {
