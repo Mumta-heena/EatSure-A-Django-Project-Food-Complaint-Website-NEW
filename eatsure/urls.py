@@ -56,6 +56,8 @@ urlpatterns = [
 
     path('reject-restaurant/<int:pending_id>/', v.reject_restaurant, name='reject_restaurant'),
 
+    path('fake_det/', v.fake_det, name='fake_det'),
+
     
 ]
 

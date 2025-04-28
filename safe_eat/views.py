@@ -322,3 +322,5 @@ def pending_restaurants_list(request):
     pending_restaurants = PendingRestaurant.objects.filter(approved=False)
     return render(request, 'pending_restaurants_list.html', {'pending_restaurants': pending_restaurants})
 
+def fake_det(request):
+    return render(request, 'fake_det.html')

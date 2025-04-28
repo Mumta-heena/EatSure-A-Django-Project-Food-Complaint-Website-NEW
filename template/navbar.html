@@ -1,90 +1,90 @@
 <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #ff8c00; font-weight: bold;">
-  <div class="container">
-    <a class="navbar-brand fs-3" href="{% url 'welcome' %}">
-      <i class="fas fa-utensils me-2"></i>EatSURE
-    </a>
-    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto gap-lg-4">
-        <!-- Existing links maintained -->
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'welcome' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'search' %}">Report a Cafe</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'restaurants' %}">Restaurants</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
-        </li>
-
-        <!-- Dynamic auth section preserved -->
-        {% if user.is_authenticated %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
-            <i class="fas fa-user-circle me-2"></i>{{ user.username }}
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end shadow">
-            <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user me-2"></i>Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Log Out</a></li>
-          </ul>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="btn btn-outline-light px-3" href="{% url 'login' %}">Log In</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-light px-3 text-orange" href="{% url 'signup' %}">Sign Up</a>
-        </li>
-        {% endif %}
-      </ul>
+    <div class="container">
+      <a class="navbar-brand fs-3" href="{% url 'welcome' %}">
+        <i class="fas fa-utensils me-2"></i>EatSURE
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-lg-4">
+          <!-- Existing links maintained -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'welcome' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'search' %}">Report a Cafe</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'restaurants' %}">Restaurants</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+          </li>
+  
+          <!-- Dynamic auth section preserved -->
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle me-2"></i>{{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+              <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user me-2"></i>Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Log Out</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="btn btn-outline-light px-3" href="{% url 'login' %}">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-light px-3 text-orange" href="{% url 'signup' %}">Sign Up</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
-
-<style>
-/* Enhanced dropdown styling without changing colors */
-.custom-dropdown-menu {
-  background-color: #ff8c00;
-  border: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.custom-dropdown-menu .dropdown-item {
-  color: white;
-  transition: all 0.2s ease;
-  padding: 0.5rem 1rem;
-}
-
-.custom-dropdown-menu .dropdown-item:hover {
-  background-color: #e07600;
-  padding-left: 1.25rem;
-}
-
-.nav-link {
-  position: relative;
-  padding: 0.5rem 1rem !important;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: white;
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-  width: 100%;
-}
-</style>
+  </nav>
+  
+  <style>
+  /* Enhanced dropdown styling without changing colors */
+  .custom-dropdown-menu {
+    background-color: #ff8c00;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  .custom-dropdown-menu .dropdown-item {
+    color: white;
+    transition: all 0.2s ease;
+    padding: 0.5rem 1rem;
+  }
+  
+  .custom-dropdown-menu .dropdown-item:hover {
+    background-color: #e07600;
+    padding-left: 1.25rem;
+  }
+  
+  .nav-link {
+    position: relative;
+    padding: 0.5rem 1rem !important;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  </style>

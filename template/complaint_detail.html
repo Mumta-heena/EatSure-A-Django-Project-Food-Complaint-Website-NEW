@@ -116,6 +116,37 @@
         color: white;
         transform: translateY(-2px);
     }
+
+    .copy-btn {
+        background: #007bff;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        border: none;
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    .copy-btn:hover {
+        background: #0056b3;
+    }
+
+    .predict-btn {
+        background: #7700ff;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        border: none;
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    .predict-btn:hover {
+        background: #5a018d;
+    }
+
 </style>
 
 <div class="complaint-container">
@@ -159,9 +190,19 @@
 
         <div class="mb-4">
             <h5 class="mb-3">Description</h5>
-            <div class="bg-white p-3 rounded-2">
+            <div class="bg-white p-3 rounded-2" id="textToCopy">
                 {{ complaint.complaint_Description|linebreaks }}
             </div>
+            {% if user.is_staff %}
+            <!-- Button to copy text -->
+            <button class="copy-btn" onclick="copyText()">Copy Text</button>
+            <!-- Button to Predict -->
+            <a href="{% url 'fake_det' %}" 
+                            class="predict-btn" role="button">
+                             Predict Fake or Real
+                        </a>
+            
+            {% endif %}
         </div>
     </div>
 
@@ -210,7 +251,6 @@
         </a>
         {% if user.is_staff %}
         <a href="{% url 'update_complaint_status' complaint.id %}" class="btn-back" style="background: #008080;">
-
             Edit Complaint
         </a>
         {% endif %}
@@ -232,5 +272,27 @@
     function showImage(imageUrl) {
         document.getElementById('modalImage').src = imageUrl;
     }
+
+    function copyText() {
+        // Select the text inside the div
+        const textToCopy = document.getElementById('textToCopy');
+        const range = document.createRange();
+        range.selectNodeContents(textToCopy);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        // Copy the selected text to clipboard
+        try {
+            document.execCommand('copy');
+            alert('Text copied to clipboard!');
+        } catch (err) {
+            alert('Failed to copy text: ' + err);
+        }
+
+        // Clear selection
+        selection.removeAllRanges();
+    }
 </script>
+
 {% endblock %}
