@@ -1,3 +1,4 @@
 streamlit
 pyperclip
 joblib
+scikit-learn
