@@ -105,16 +105,16 @@ if 'user_review' not in st.session_state:
 user_review = st.text_area("✍️ Enter Review Text:", value=st.session_state.user_review)
 
 # Copy (Paste) Button
-def paste_action():
-    try:
-        pasted_text = pyperclip.paste()
-        st.session_state.user_review = pasted_text
-        st.rerun()
-    except Exception as e:
-        st.error(f"Failed to paste text: {e}")
+# def paste_action():
+#     try:
+#         pasted_text = pyperclip.paste()
+#         st.session_state.user_review = pasted_text
+#         st.rerun()
+#     except Exception as e:
+#         st.error(f"Failed to paste text: {e}")
 
-if st.button("📋 Paste Review"):
-    paste_action()
+# if st.button("📋 Paste Review"):
+#     paste_action()
 
 # Predict Button
 if st.button("🔍 Check Review"):
